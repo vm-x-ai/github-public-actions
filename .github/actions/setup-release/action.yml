@@ -54,7 +54,7 @@ runs:
 
     - name: poetry config
       shell: bash
-      if: ${{ inputs.use-python == true }}
+      if: ${{ inputs.use-python == 'true' }}
       run: poetry config pypi-token.pypi "$PYPI_TOKEN"
       env:
         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}

@@ -13,13 +13,13 @@ runs:
   steps:
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
-      if: ${{ inputs.use-python == true }}
+      if: ${{ inputs.use-python == 'true' }}
       with:
         python-version: 3.9
 
     - name: Set up Poetry
       uses: abatilo/actions-poetry@v2
-      if: ${{ inputs.use-python == true }}
+      if: ${{ inputs.use-python == 'true' }}
       with:
         poetry-version: 1.8.2
 
@@ -38,7 +38,7 @@ runs:
       run: pnpm install
 
     - name: Install Python Dependencies
-      if: ${{ inputs.use-python == true }}
+      if: ${{ inputs.use-python == 'true' }}
       shell: bash
       run: poetry install
 
