@@ -1,0 +1,45 @@
+name: Release Workflow
+
+on:
+  workflow_call:
+    inputs:
+      specifier:
+        description: 'The specifier for the workflow to call (e.g. major, minor, patch, etc.)'
+        required: true
+        default: 'patch'
+        type: string
+      use-python:
+        description: 'Enable Python'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  actions: write
+  id-token: write
+  pull-requests: write
+  issues: write
+  statuses: write
+  checks: write
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release ${{ inputs.specifier }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: vm-x-ai/github-public-actions/.github/actions/setup-release@main
+        with:
+          use-python: ${{ inputs.use-python }}
+      - name: Release
+        run: |
+          pnpm nx release --yes ${{ inputs.specifier }}
+          git push --follow-tags
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
