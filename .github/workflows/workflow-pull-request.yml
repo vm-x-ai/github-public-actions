@@ -1,0 +1,29 @@
+name: Pull Request Checks
+
+on:
+  workflow_call:
+
+permissions:
+  actions: write
+  contents: read
+  id-token: write
+
+jobs:
+  checks:
+    name: Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: vm-x-ai/github-actions/.github/actions/setup-monorepo@main
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: ${{ vars.NXCACHE_IAM_ROLE }}
+          aws-region: ${{ vars.NXCACHE_AWS_REGION }}
+          role-session-name: NxCache
+
+      - run: pnpm nx format:check
+      - run: pnpm nx affected -t lint test build

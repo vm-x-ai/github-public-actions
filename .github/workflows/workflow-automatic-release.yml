@@ -1,0 +1,32 @@
+name: Automatic Release
+
+on:
+  workflow_call:
+
+permissions:
+  actions: write
+  id-token: write
+  pull-requests: write
+  issues: write
+  statuses: write
+  checks: write
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: vm-x-ai/github-actions/.github/actions/setup-release@main
+      - name: Release
+        run: |
+          pnpm nx release --yes
+          git push --follow-tags
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
