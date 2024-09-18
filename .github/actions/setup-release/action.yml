@@ -24,6 +24,8 @@ runs:
         token: ${{ steps.generate_token.outputs.token }}
 
     - uses: vm-x-ai/github-public-actions/.github/actions/setup-monorepo@main
+      with:
+        use-python: ${{ inputs.use-python }}
 
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v3
@@ -52,7 +54,7 @@ runs:
 
     - name: poetry config
       shell: bash
-      if: ${{ inputs.use-python }}
+      if: ${{ inputs.use-python == true }}
       run: poetry config pypi-token.pypi "$PYPI_TOKEN"
       env:
         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
