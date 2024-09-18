@@ -21,7 +21,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - uses: vm-x-ai/github-actions/.github/actions/setup-release@main
+      - uses: vm-x-ai/github-public-actions/.github/actions/setup-release@main
       - name: Release
         run: |
           pnpm nx release --yes

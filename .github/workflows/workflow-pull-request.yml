@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: vm-x-ai/github-actions/.github/actions/setup-monorepo@main
+      - uses: vm-x-ai/github-public-actions/.github/actions/setup-monorepo@main
 
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
