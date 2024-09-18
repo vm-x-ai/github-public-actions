@@ -36,6 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: vm-x-ai/github-public-actions/.github/actions/setup-release@main
+        id: setup_release
         with:
           use-python: ${{ inputs.use-python }}
           semantic-release-app-id: ${{ secrets.SEMANTIC_RELEASE_APP_ID }}
@@ -52,4 +53,4 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token }}
+          GITHUB_TOKEN: ${{ steps.setup_release.outputs.token }}

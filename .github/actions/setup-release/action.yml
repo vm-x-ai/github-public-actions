@@ -32,6 +32,11 @@ inputs:
     required: true
     type: string
 
+outputs:
+  token:
+    description: "The GitHub token"
+    value: ${{ steps.generate_token.outputs.token }}
+
 runs:
   using: "composite"
   steps:
