@@ -1,6 +1,13 @@
 name: Set Up Release NPM and PyPI
 description: Set up NPM and PyPI for release
 
+inputs:
+  use-python:
+    description: 'Enable Python'
+    required: true
+    default: false
+    type: boolean
+
 runs:
   using: 'composite'
   steps:
@@ -45,6 +52,7 @@ runs:
 
     - name: poetry config
       shell: bash
+      if: ${{ inputs.use-python }}
       run: poetry config pypi-token.pypi "$PYPI_TOKEN"
       env:
         PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}

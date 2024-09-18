@@ -1,15 +1,25 @@
 name: Set Up Monorepo
 description: Set up nx monorepo for CI workflows
 
+inputs:
+  use-python:
+    description: 'Enable Python'
+    required: true
+    default: false
+    type: boolean
+
 runs:
   using: 'composite'
   steps:
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
+      if: ${{ inputs.use-python }}
       with:
         python-version: 3.9
+
     - name: Set up Poetry
       uses: abatilo/actions-poetry@v2
+      if: ${{ inputs.use-python }}
       with:
         poetry-version: 1.8.2
 
@@ -28,6 +38,7 @@ runs:
       run: pnpm install
 
     - name: Install Python Dependencies
+      if: ${{ inputs.use-python }}
       shell: bash
       run: poetry install
 

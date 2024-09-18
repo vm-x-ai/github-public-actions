@@ -2,6 +2,12 @@ name: Automatic Release
 
 on:
   workflow_call:
+    inputs:
+      use-python:
+        description: 'Enable Python'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   actions: write
@@ -22,6 +28,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: vm-x-ai/github-public-actions/.github/actions/setup-release@main
+        with:
+          use-python: ${{ inputs.use-python }}
       - name: Release
         run: |
           pnpm nx release --yes

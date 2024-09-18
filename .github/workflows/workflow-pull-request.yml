@@ -2,6 +2,12 @@ name: Pull Request Checks
 
 on:
   workflow_call:
+    inputs:
+      use-python:
+        description: 'Enable Python'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   actions: write
@@ -17,6 +23,8 @@ jobs:
         with:
           fetch-depth: 0
       - uses: vm-x-ai/github-public-actions/.github/actions/setup-monorepo@main
+        with:
+          use-python: ${{ inputs.use-python }}
 
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
