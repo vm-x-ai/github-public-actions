@@ -36,7 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: vm-x-ai/github-public-actions/.github/actions/setup-release@main
-        secrets: inherit
         with:
           use-python: ${{ inputs.use-python }}
       - name: Release
