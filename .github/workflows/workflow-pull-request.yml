@@ -26,6 +26,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: vm-x-ai/github-public-actions/.github/actions/setup-monorepo@main
+        secrets: inherit
         with:
           use-python: ${{ inputs.use-python }}
 
