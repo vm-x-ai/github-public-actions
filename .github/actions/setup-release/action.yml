@@ -3,20 +3,36 @@ description: Set up NPM and PyPI for release
 
 inputs:
   use-python:
-    description: 'Enable Python'
+    description: "Enable Python"
     required: true
     default: false
     type: boolean
+  semantic-release-app-id:
+    description: "The app id for the semantic release GitHub App"
+    required: true
+    type: string
+  semantic-release-private-key:
+    description: "The private key for the semantic release GitHub App"
+    required: true
+    type: string
+  npm-token:
+    description: "The NPM token"
+    required: true
+    type: string
+  pypi-token:
+    description: "The PyPI token"
+    required: true
+    type: string
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Generate token
       id: generate_token
       uses: tibdex/github-app-token@v2
       with:
-        app_id: ${{ secrets.SEMANTIC_RELEASE_APP_ID }}
-        private_key: ${{ secrets.SEMANTIC_RELEASE_PRIVATE_KEY }}
+        app_id: ${{ inputs.semantic-release-app-id }}
+        private_key: ${{ inputs.semantic-release-private-key }}
 
     - uses: actions/checkout@v4
       with:
@@ -50,11 +66,11 @@ runs:
       shell: bash
       run: npm config set //registry.npmjs.org/:_authToken $NPM_TOKEN
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        NPM_TOKEN: ${{ inputs.npm-token }}
 
     - name: poetry config
       shell: bash
       if: ${{ inputs.use-python == 'true' }}
       run: poetry config pypi-token.pypi "$PYPI_TOKEN"
       env:
-        PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        PYPI_TOKEN: ${{ inputs.pypi-token }}

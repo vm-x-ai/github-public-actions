@@ -33,6 +33,11 @@ jobs:
       - uses: vm-x-ai/github-public-actions/.github/actions/setup-release@main
         with:
           use-python: ${{ inputs.use-python }}
+          semantic-release-app-id: ${{ secrets.SEMANTIC_RELEASE_APP_ID }}
+          semantic-release-private-key: ${{ secrets.SEMANTIC_RELEASE_PRIVATE_KEY }}
+          npm-token: ${{ secrets.NPM_TOKEN }}
+          pypi-token: ${{ secrets.PYPI_TOKEN }}
+
       - name: Release
         run: |
           pnpm nx release --yes
