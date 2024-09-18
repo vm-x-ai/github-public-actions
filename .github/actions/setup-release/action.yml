@@ -23,6 +23,14 @@ inputs:
     description: "The PyPI token"
     required: true
     type: string
+  nx-cache-iam-role:
+    description: "The IAM role for the NxCache"
+    required: true
+    type: string
+  nx-cache-aws-region:
+    description: "The AWS region for the NxCache"
+    required: true
+    type: string
 
 runs:
   using: "composite"
@@ -46,8 +54,8 @@ runs:
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v3
       with:
-        role-to-assume: ${{ vars.NXCACHE_IAM_ROLE }}
-        aws-region: ${{ vars.NXCACHE_AWS_REGION }}
+        role-to-assume: ${{ inputs.nx-cache-iam-role }}
+        aws-region: ${{ inputs.nx-cache-aws-region }}
         role-session-name: NxCache
 
     - name: git config
