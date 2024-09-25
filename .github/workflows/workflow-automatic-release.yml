@@ -51,7 +51,7 @@ jobs:
           if [ "${{ inputs.publish }}" = "true" ]; then
             pnpm nx release --yes
           else
-            pnpm nx release --skip-publish --yes
+            pnpm nx release --skip-publish
           fi
           git push --follow-tags
         env:
