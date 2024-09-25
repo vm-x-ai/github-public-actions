@@ -8,6 +8,11 @@ on:
         required: false
         default: false
         type: boolean
+      publish:
+        description: 'Publish the release to NPM and PyPI'
+        required: false
+        default: true
+        type: boolean
 
 permissions:
   actions: write
@@ -43,7 +48,11 @@ jobs:
 
       - name: Release
         run: |
-          pnpm nx release --yes
+          if [ "${{ inputs.publish }}" = "true" ]; then
+            pnpm nx release --yes
+          else
+            pnpm nx release --skip-publish --yes
+          fi
           git push --follow-tags
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
