@@ -46,6 +46,10 @@ jobs:
           nx-cache-iam-role: ${{ vars.NXCACHE_IAM_ROLE }}
           nx-cache-aws-region: ${{ vars.NXCACHE_AWS_REGION }}
 
+      - uses: oNaiPs/secrets-to-env-action@v1.5
+        with:
+          secrets: ${{ toJSON(secrets) }}
+
       - name: Release
         run: |
           if [ "${{ inputs.publish }}" = "true" ]; then
