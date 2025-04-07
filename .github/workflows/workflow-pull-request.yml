@@ -10,22 +10,22 @@ on:
         type: boolean
       pnpm-version:
         description: 'PNPM version'
-        required: true
+        required: false
         default: '8'
         type: string
       node-version:
         description: 'Node version'
-        required: true
+        required: false
         default: '20'
         type: string
       poetry-version:
         description: 'Poetry version'
-        required: true
+        required: false
         default: '1.8.2'
         type: string
       python-version:
         description: 'Python version'
-        required: true
+        required: false
         default: '3.9'
         type: string
 
