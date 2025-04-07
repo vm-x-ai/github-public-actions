@@ -13,6 +13,26 @@ on:
         required: false
         default: true
         type: boolean
+      pnpm-version:
+        description: 'PNPM version'
+        required: true
+        default: '8'
+        type: string
+      node-version:
+        description: 'Node version'
+        required: true
+        default: '20'
+        type: string
+      poetry-version:
+        description: 'Poetry version'
+        required: true
+        default: '1.8.2'
+        type: string
+      python-version:
+        description: 'Python version'
+        required: true
+        default: '3.9'
+        type: string
 
 permissions:
   actions: write
@@ -45,6 +65,10 @@ jobs:
           pypi-token: ${{ secrets.PYPI_TOKEN }}
           nx-cache-iam-role: ${{ vars.NXCACHE_IAM_ROLE }}
           nx-cache-aws-region: ${{ vars.NXCACHE_AWS_REGION }}
+          pnpm-version: ${{ inputs.pnpm-version }}
+          node-version: ${{ inputs.node-version }}
+          poetry-version: ${{ inputs.poetry-version }}
+          python-version: ${{ inputs.python-version }}
 
       - uses: oNaiPs/secrets-to-env-action@v1.5
         with:

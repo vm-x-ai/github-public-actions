@@ -31,6 +31,26 @@ inputs:
     description: "The AWS region for the NxCache"
     required: true
     type: string
+  pnpm-version:
+    description: 'PNPM version'
+    required: true
+    default: '8'
+    type: string
+  node-version:
+    description: 'Node version'
+    required: true
+    default: '20'
+    type: string
+  poetry-version:
+    description: 'Poetry version'
+    required: true
+    default: '1.8.2'
+    type: string
+  python-version:
+    description: 'Python version'
+    required: true
+    default: '3.9'
+    type: string
 
 outputs:
   token:
@@ -55,6 +75,10 @@ runs:
     - uses: vm-x-ai/github-public-actions/.github/actions/setup-monorepo@main
       with:
         use-python: ${{ inputs.use-python }}
+        pnpm-version: ${{ inputs.pnpm-version }}
+        node-version: ${{ inputs.node-version }}
+        poetry-version: ${{ inputs.poetry-version }}
+        python-version: ${{ inputs.python-version }}
 
     - name: configure aws credentials
       uses: aws-actions/configure-aws-credentials@v3
