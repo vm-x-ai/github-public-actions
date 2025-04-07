@@ -7,6 +7,26 @@ inputs:
     required: true
     default: false
     type: boolean
+  pnpm-version:
+    description: 'PNPM version'
+    required: true
+    default: '8'
+    type: string
+  node-version:
+    description: 'Node version'
+    required: true
+    default: '20'
+    type: string
+  poetry-version:
+    description: 'Poetry version'
+    required: true
+    default: '1.8.2'
+    type: string
+  python-version:
+    description: 'Python version'
+    required: true
+    default: '3.9'
+    type: string
 
 runs:
   using: 'composite'
@@ -15,22 +35,23 @@ runs:
       uses: actions/setup-python@v4
       if: ${{ inputs.use-python == 'true' }}
       with:
-        python-version: 3.9
+        python-version: ${{ inputs.python-version }}
 
     - name: Set up Poetry
       uses: abatilo/actions-poetry@v2
       if: ${{ inputs.use-python == 'true' }}
       with:
-        poetry-version: 1.8.2
+        poetry-version: ${{ inputs.poetry-version }}
 
-    - name: Use PNPM 8.x
+    - name: Use PNPM ${{ inputs.pnpm-version }}.x
       uses: pnpm/action-setup@v3
       with:
-        version: 8
-    - name: Use Node.js 20.x
+        version: ${{ inputs.pnpm-version }}
+
+    - name: Use Node.js ${{ inputs.node-version }}.x
       uses: actions/setup-node@v3
       with:
-        node-version: 20
+        node-version: ${{ inputs.node-version }}
         cache: 'pnpm'
 
     - name: Install Node.js Dependencies
