@@ -54,6 +54,7 @@ concurrency:
 
 env:
   NODE_OPTIONS: '--max_old_space_size=4096'
+  NXCACHE_AWS_DISABLE: 'true'
 
 jobs:
   release:
